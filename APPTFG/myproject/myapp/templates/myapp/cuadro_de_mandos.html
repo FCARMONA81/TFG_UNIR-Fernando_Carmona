@@ -1,0 +1,159 @@
+{% extends "myapp/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block title %}Cuadro de Mandos{% endblock %}
+
+{% block content %}
+<div class="container mt-2">
+    <h3 class="mb-2 text-center">Cuadro de Mandos</h3>
+
+    <div class="form-group">
+        <label for="indicadorSelect">Seleccionar Indicador:</label>
+        <select id="indicadorSelect" class="form-control">
+            {% for indicador in indicadores %}
+                <option value="{{ indicador.nombre_indicador }}">{{ indicador.nombre_indicador }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Seleccionar UGC:</label>
+        {% for ugc in ugcs %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="ugc{{ ugc.id_ugc }}" value="{{ ugc.nombre_ugc }}" checked>
+                <label class="form-check-label" for="ugc{{ ugc.id_ugc }}">{{ ugc.nombre_ugc }}</label>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="chart-container">
+        <canvas id="cuadroDeMandosChart"></canvas>
+    </div>
+</div>
+
+<!-- Chart.js and Chart.js Data Labels Plugin -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const chartData = JSON.parse('{{ data|escapejs }}');
+        const indicadorSelect = document.getElementById('indicadorSelect');
+        const ctx = document.getElementById('cuadroDeMandosChart').getContext('2d');
+
+        let chart;
+
+        function updateChart(selectedIndicador, selectedUgcs) {
+            const filteredData = chartData.filter(item => item.indicador === selectedIndicador && selectedUgcs.includes(item.ugc));
+
+            const labels = filteredData.map(item => `${item.ugc} (${item.anio})`);
+            const valorMin = filteredData.map(item => parseFloat(item.valor_min));
+            const valorOpt = filteredData.map(item => parseFloat(item.valor_opt));
+            const valorObtenido = filteredData.map(item => parseFloat(item.valor_obtenido));
+            const resultadoIndicador = filteredData.map(item => parseFloat(item.resultado_indicador));
+            const porcentajeConseguido = filteredData.map(item => parseFloat(item.porcentaje_conseguido));
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Valor Obtenido',
+                            type: 'bar',
+                            data: valorObtenido,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Resultado Indicador',
+                            type: 'bar',
+                            data: resultadoIndicador,
+                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            borderWidth: 1,
+                            hidden: true // Desactivado por defecto
+                        },
+                        {
+                            label: 'Porcentaje Conseguido',
+                            type: 'bar',
+                            data: porcentajeConseguido,
+                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            borderWidth: 1,
+                            hidden: true // Desactivado por defecto
+                        },
+                        {
+                            label: 'Valor Mínimo',
+                            type: 'line',
+                            data: valorMin,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 3,
+                            fill: false
+                        },
+                        {
+                            label: 'Valor Óptimo',
+                            type: 'line',
+                            data: valorOpt,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 3,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: true,
+                            color: 'black',
+                            anchor: 'end',
+                            align: 'start',
+                            formatter: function(value, context) {
+                                if (context.dataset.label === 'Valor Obtenido' || context.dataset.label === 'Resultado Indicador' || context.dataset.label === 'Porcentaje Conseguido') {
+                                    return value;
+                                }
+                                return '';
+                            }                            
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        function getSelectedUgcs() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(checkbox => checkbox.value);
+        }
+
+        indicadorSelect.addEventListener('change', function() {
+            updateChart(this.value, getSelectedUgcs());
+        });
+
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                updateChart(indicadorSelect.value, getSelectedUgcs());
+            });
+        });
+
+        // Inicializar el gráfico con el primer indicador y todos los UGC seleccionados
+        if (indicadorSelect.options.length > 0) {
+            updateChart(indicadorSelect.value, getSelectedUgcs());
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Crear AGC{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Crear AGC</h1>
+    <form method="post" class="form-inline">
+        {% csrf_token %}
+        
+        <!-- Campo Id UGC -->
+        <div class="form-group mr-3">
+            <label for="{{ form.id_ugc.id_for_label }}" class="mr-2">UGC</label>
+            {{ form.id_ugc }}
+            {% if form.id_ugc.help_text %}
+            <small class="form-text text-muted">{{ form.id_ugc.help_text }}</small>
+            {% endif %}
+            {% for error in form.id_ugc.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- Campo Año AGC -->
+        <div class="form-group mr-3">
+            <label for="{{ form.anio_agc.id_for_label }}" class="mr-2">Año</label>
+            {{ form.anio_agc }}
+            {% if form.anio_agc.help_text %}
+            <small class="form-text text-muted">{{ form.anio_agc.help_text }}</small>
+            {% endif %}
+            {% for error in form.anio_agc.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- Campo Descripción AGC -->
+        <div class="form-group mr-3">
+            <label for="{{ form.descripcion_agc.id_for_label }}" class="mr-2">Descripción</label>
+            {{ form.descripcion_agc }}
+            {% if form.descripcion_agc.help_text %}
+            <small class="form-text text-muted">{{ form.descripcion_agc.help_text }}</small>
+            {% endif %}
+            {% for error in form.descripcion_agc.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">Crear</button>
+            <a href="{% url 'gestionar_agc' %}" class="btn btn-secondary ml-2">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

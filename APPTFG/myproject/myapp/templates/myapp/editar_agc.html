@@ -1,0 +1,97 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Editar AGC{% endblock %}
+
+{% block content %}
+<div class="container mt-2">
+
+  <form method="post" class="mb-4 form-inline">
+    {% csrf_token %}
+            <!-- Campo Id UGC -->
+            <div class="form-group mr-3">
+              <label for="{{ form.id_ugc.id_for_label }}" class="mr-2">UGC</label>
+              {{ form.id_ugc }}
+              {% if form.id_ugc.help_text %}
+              <small class="form-text text-muted">{{ form.id_ugc.help_text }}</small>
+              {% endif %}
+              {% for error in form.id_ugc.errors %}
+              <div class="text-danger">{{ error }}</div>
+              {% endfor %}
+          </div>
+  
+          <!-- Campo Año AGC -->
+          <div class="form-group mr-3">
+              <label for="{{ form.anio_agc.id_for_label }}" class="mr-2">Año</label>
+              {{ form.anio_agc }}
+              {% if form.anio_agc.help_text %}
+              <small class="form-text text-muted">{{ form.anio_agc.help_text }}</small>
+              {% endif %}
+              {% for error in form.anio_agc.errors %}
+              <div class="text-danger">{{ error }}</div>
+              {% endfor %}
+          </div>
+  
+          <!-- Campo Descripción AGC -->
+          <div class="form-group mr-3">
+              <label for="{{ form.descripcion_agc.id_for_label }}" class="mr-2">Descripción</label>
+              {{ form.descripcion_agc }}
+              {% if form.descripcion_agc.help_text %}
+              <small class="form-text text-muted">{{ form.descripcion_agc.help_text }}</small>
+              {% endif %}
+              {% for error in form.descripcion_agc.errors %}
+              <div class="text-danger">{{ error }}</div>
+              {% endfor %}
+          </div>
+    
+    
+    <a href="{% url 'gestionar_agc' %}" class="btn btn-secondary btn-sm">Volver</a>
+  </form>
+
+  <h5 class="mb-3">Indicadores asociados al AGC</h5>
+  
+  <table class="table table-sm table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Indicador</th>
+        <th>Mínimo</th>
+        <th>Óptimo</th>
+        <th>Obtenido</th>
+        <th>Peso</th>
+        <th>Puntos</th>
+        <th>% Conseguido</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for acuerdo in indicadores %}
+      <tr>
+        <td>{{ acuerdo.id_indicador.nombre_indicador }}</td>
+        <td>{{ acuerdo.valor_min }}</td>
+        <td>{{ acuerdo.valor_opt }}</td>
+        <td>{{ acuerdo.valor_obtenido }}</td>
+        <td>{{ acuerdo.peso_indicador }}</td>
+        <td>{{ acuerdo.resultado_indicador }}</td>
+        <td class="{% if acuerdo.porcentaje_conseguido == 0 %}bg-red{% elif acuerdo.porcentaje_conseguido == 100 %}bg-green{% else %}bg-orange{% endif %}">
+            {{ acuerdo.porcentaje_conseguido }}
+        </td>
+        <td>
+          <a href="{% url 'editar_acuerdo_indicador' acuerdo.pk %}" class="btn btn-warning btn-sm">Editar</a>
+          <form method="post" action="{% url 'eliminar_acuerdo_indicador' acuerdo.pk %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="4" class="text-right"><strong>Total Resultado:</strong></td>
+        <td><strong>{{ total_peso }}</strong></td>
+        <td><strong>{{ total_resultado }}</strong></td>
+        <td class="{% if acuerdo.porcentaje_conseguido == 0 %}bg-red{% elif acuerdo.porcentaje_conseguido == 100 %}bg-green{% else %}bg-orange{% endif %}"><strong>{{ total_porcentaje }}</strong></td>
+        <td colspan="2"></td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{% url 'crear_acuerdo_indicador' agc.pk %}" class="btn btn-primary btn-sm">Añadir Indicador</a>
+</div>
+{% endblock %}

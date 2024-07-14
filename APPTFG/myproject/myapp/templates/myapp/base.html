@@ -1,0 +1,67 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Django App{% endblock %}</title>
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <!-- Ruta CSS -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Cabecera -->
+    <header class="bg-light py-3">
+        <div class="container d-flex align-items-center">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" class="mr-3" style="height: 50px;">
+            <h2 class="mb-0">Aplicación de seguimiento de Acuerdos de Gestión Clínica</h2>
+        </div>
+    </header>
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <div>
+                <ul class="navbar-nav w-100 mr-5 ml-5 d-flex justify-content-between">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'inicio' %}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'gestionar_ugc' %}">UGC</a></li>                    
+                    <li class="nav-item"><a class="nav-link" href="{% url 'gestionar_objetivos' %}">Objetivos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'gestionar_indicadores' %}">Indicadores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'gestionar_agc' %}">AGC</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'import_export' %}">Importar/Exportar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cuadro_de_mandos' %}">Cuadro de Mandos</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Contenido -->
+    <div class="container mt-2">
+        {% block content %}{% endblock %}
+    </div>
+    <!-- Pie de página  -->
+    <footer class="bg-light py-3 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">© 2024 Aplicación de Gestión Clínica. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <!-- Bootstrap JS  -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

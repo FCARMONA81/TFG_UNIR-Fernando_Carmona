@@ -1,0 +1,36 @@
+{% extends "myapp/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Editar UGC{% endblock %}
+
+{% block content %}
+
+
+<div class="container mt-5">
+<h1 class="mb-4">Crear UGC</h1>
+<form method="post" action="" class="mb-4">
+    {% csrf_token %}
+    <div>
+        <div class="form-group col-md-4">
+            <label class="label-custom"> Nombre </label>
+            {{ form.nombre_ugc|add_class:"form-control input-custom input-medium" }}
+        </div>
+        <div class="form-group col-md-4">
+            <label class="label-custom"> Descripción </label>
+            {{ form.descripcion_ugc|add_class:"form-control input-custom input-large" }}
+        </div>
+        <div class="form-group col-md-4">
+            <label class="label-custom"> Responsable </label>
+            {{ form.responsable_ugc|add_class:"form-control input-custom input-large" }}
+        </div>
+        <div class="form-group col-md-4">
+            <label class="label-custom">Fecha de creación</label>
+            {{ form.fecha_crea_ugc|add_class:"form-control input-custom input-small" }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{% url 'gestionar_ugc' %}" class="btn btn-secondary ml-2">Volver a la lista de UGC</a>
+</form>
+</div>
+{% endblock %}
+

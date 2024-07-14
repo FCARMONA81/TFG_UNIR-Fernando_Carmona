@@ -1,0 +1,37 @@
+{% extends "myapp/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block title %}Crear Indicador{% endblock %}
+
+{% block content %}
+
+
+<div class="container mt-5">
+<h1 class="mb-4">Crear Indicador</h1>
+<form method="post" action="" class="mb-4">
+    {% csrf_token %}
+    <div>
+        <div class="form-group col-md-4">
+            <label class="label-custom"> Objetivo </label>
+            {{ form.id_objetivo|add_class:"form-control input-custom input-large" }}
+        </div>
+        <div class="form-group col-md-4">
+            <label class="label-custom"> Nombre </label>
+            {{ form.nombre_indicador|add_class:"form-control input-custom input-large" }}
+        </div>
+        <div class="form-group col-md-4">
+            <label class="label-custom"> Descripcion </label>
+            {{ form.descripcion_indicador|add_class:"form-control input-custom input-xlarge" }}
+        </div>
+        <div class="form-group col-md-4">
+          <label class="label-custom"> Fuente </label>
+          {{ form.fuente|add_class:"form-control input-custom input-medium" }}
+      </div>
+        
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{% url 'gestionar_indicadores' %}" class="btn btn-secondary ml-2">Volver a la lista de Indicadores</a>
+</form>
+</div>
+{% endblock %}

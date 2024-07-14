@@ -1,0 +1,39 @@
+{% extends "myapp/base.html" %}
+
+
+{% block content %}
+  <h1>Indicadores de AGC: {{ agc.nombre }}</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Indicador</th>
+        <th>Valor Minimo</th>
+        <th>Valor Optimo</th>
+        <th>Porcentaje Conseguido</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for indicador in indicadores %}
+        <tr>
+          <td>{{ indicador.pk }}</td>
+          <td>{{ indicador.nombre_indicador }}</td>
+          <td>{{ indicador.valor_min }}</td>
+          <td>{{ indicador.valor_opt }}</td>
+          <td class="{% if acuerdo.porcentaje_conseguido == 0 %}bg-red{% elif acuerdo.porcentaje_conseguido == 100 %}bg-green{% else %}bg-orange{% endif %}">
+            {{ acuerdo.porcentaje_conseguido }}
+        </td>
+          <td>
+            <a href="{% url 'editar_acuerdo_indicador' indicador.pk %}">Editar</a>
+            <form action="{% url 'eliminar_acuerdo_indicador' indicador.pk %}" method="post" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'crear_acuerdo_indicador' agc.pk %}">Añadir Indicador</a>
+{% endblock %}

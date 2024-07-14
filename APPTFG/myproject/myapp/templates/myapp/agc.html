@@ -1,0 +1,38 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Gestionar AGCs{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+  <h4 class="mb-4">Gestionar AGCs</h4>
+  <div class="table-responsive">
+    <table class="table table-sm table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Año</th>
+            <th>UGC</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for agc in agcs %}
+        <tr>
+            <td>{{ agc.anio_agc }}</td>
+            <td>{{ agc.id_ugc }}</td>
+            <td>{{ agc.descripcion_agc }}</td>
+            <td>
+            <a href="{% url 'editar_agc' agc.pk %}" class="btn btn-primary btn-sm">Consultar</a>
+            <form method="post" action="{% url 'eliminar_agc' agc.pk %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+            </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+  <a href="{% url 'crear_agc' %}" class="btn btn-primary">Crear AGC</a>
+</div>
+{% endblock %}

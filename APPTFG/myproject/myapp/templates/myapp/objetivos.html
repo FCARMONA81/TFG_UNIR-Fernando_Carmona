@@ -1,0 +1,41 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Gestionar Objetivos{% endblock %}
+
+{% block content %}
+    <div class="container mt-3">
+        <h4 class="mb-4">Gestionar Objetivos</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Perspectiva</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for objetivo in objetivos %}
+                    <tr>
+                        <td>{{ objetivo.nombre_objetivo }}</td>
+                        <td>{{ objetivo.descripcion_objetivo }}</td>
+                        <td>{{ objetivo.perspectiva }}</td>
+                        <td>
+                            <a href="{% url 'editar_objetivo' objetivo.id_objetivo %}" class="btn btn-warning btn-sm">Editar</a>
+                            <form method="post" action="" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="id_objetivo" value="{{ objetivo.id_objetivo }}">
+                                <button type="submit" name="delete" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="{% url 'crear_objetivo' %}" class="btn btn-primary">Crear Objetivo</a>
+        
+    </div>
+{% endblock %}

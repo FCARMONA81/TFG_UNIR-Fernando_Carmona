@@ -1,0 +1,169 @@
+body {
+    background-color: #f2f2f2; /* Fondo gris claro */
+    font-family: 'Arial', sans-serif; /* Fuente similar */
+    
+}
+
+/* Navbar Styles */
+.navbar {
+    
+    background-color: #004b87; /* Color de fondo del menú */
+}
+
+
+
+.navbar-custom {
+    background-color: #004b87; /* Fondo azul claro */
+    
+}
+
+.navbar-custom .nav-link {
+    color: white !important; /* Letras blancas */
+    text-align: center; /* Centrar el texto */
+    display: block; /* Asegurarse de que los enlaces sean bloques para centrado */
+}
+
+/* Ajusta la altura del logo */
+.navbar-custom .navbar-brand img {
+    height: 40px;
+}
+
+.nav-link {
+    color: #366ed6 !important; /* Color de los enlaces del menú */
+}
+
+/* Container Styles */
+.container {
+    margin-top: 1px;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #004b87; /* Color azul oscuro */
+    color: #1692da;
+    font-weight: bold;
+    text-align: left;
+}
+
+.card-body {
+    font-size: small;
+}
+
+/* Button Styles */
+
+.btn-primary:hover {
+    background-color: #003366;
+    border-color: #002244;
+}
+.btn-warning {
+    font-size: x-small;
+}
+.btn-danger {
+    font-size: x-small;
+}
+.btn-primary {
+    font-size: x-small;
+}
+.btn-primary {
+    font-size: x-small;
+}
+.btn-success {
+    font-size: x-small;
+}
+
+.btn-secondary {
+    font-size: x-small;
+}
+
+
+
+/* Jumbotron Styles */
+.jumbotron {
+    background-color: #ffffff;
+    padding: 2rem 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 0.3rem;
+}
+
+
+
+/* Table Styles */
+.table-responsive {
+    margin-top: 5px;
+}
+
+.table {
+    border-radius: 5px;
+    overflow: hidden;  
+}
+
+.table thead {
+    background-color: #343a40;
+    color: #ffffff;
+    text-align: center;
+}
+
+.table th {
+    vertical-align: middle;
+    text-align: left;
+    font-size: medium;
+}
+
+.table td {
+    vertical-align: middle;
+    text-align: left;
+    font-size: small;
+}
+
+
+
+.form-control-sm {
+    width: 100px;
+}
+
+/* Background Color Classes */
+.bg-red {
+    background-color: red;
+    color: white;
+}
+
+.bg-green {
+    background-color: green;
+    color: white;
+}
+
+.bg-orange {
+    background-color: orange;
+    color: white;
+}
+
+.label-custom {
+    background-color: #1171ee; /* Fondo celeste */
+    color: aliceblue;
+    padding: 5px;
+    border-radius: 5px;
+}
+.input-custom {
+    border-color: #1171ee !important; /* Borde celeste */
+}
+
+.input-small {
+    width: 150px; /* Tamaño pequeño */
+}
+.input-medium {
+    width: 300px; /* Tamaño mediano */
+}
+.input-large {
+    width: 450px; /* Tamaño grande */
+}
+
+.input-xlarge {
+    width: 750px; /* Tamaño grande */
+}
+
+ 

@@ -1,0 +1,54 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+{% load static %}
+<style>
+        /* Estilo para el jumbotron de la página de inicio con un fondo */
+    .bg-custom {
+        position: relative;
+        background-image: url("{% static 'img/fondo.png' %}"); /* Ruta de la imagen de fondo */
+        background-size: cover; /* Asegura que la imagen cubra todo el contenedor */
+        background-position: center; /* Centra la imagen */
+        color: white; /* Cambia el color del texto a blanco para mejor contraste */
+        padding: 2rem;
+        border-radius: 0.3rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        min-height: 100vh; /* Altura mínima para asegurar que se vea completa */
+    }
+
+    /* Superposición con degradado */
+    .bg-custom .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5); /* Color negro con opacidad del 50% */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    /* Ajuste del texto */
+    .bg-custom .overlay h1,
+    .bg-custom .overlay p {
+        z-index: 1;
+        position: relative;
+        text-align: center; /* Asegura que el texto esté centrado */
+    }
+</style>
+
+<div class="jumbotron bg-custom">
+    <div class="overlay">
+        <h1 class="display-4">Bienvenido a la aplicación de gestión clínica</h1>
+        <p class="lead">Esta es una aplicacion para el seguimiento y monitorización de los acuerdos de gestión clínica.</p>
+        <hr class="my-4">
+        <p>Usa el menú de navegación para explorar las diferentes secciones.</p>
+    </div>
+</div>
+{% endblock %}

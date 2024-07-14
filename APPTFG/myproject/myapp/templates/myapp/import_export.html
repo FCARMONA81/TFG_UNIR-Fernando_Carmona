@@ -1,0 +1,141 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Importar/Exportar{% endblock %}
+
+{% block content %}
+<div class="container mt-2">
+    <h4 class="mb-4 text-center">Importar/Exportar Datos</h4>
+
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Exportar AGCs</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Exporta todos los datos de AGCs y sus indicadores asociados a un archivo Excel.</p>
+                    <a href="{% url 'export_agc_excel' %}" class="btn btn-success">Exportar a Excel</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Importar Resultados AGCs</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Importa un archivo Excel con los resultados de los AGCs.</p>
+                    <form method="post" action="{% url 'import_agc_excel' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.excel_file.label_tag }}
+                            {{ form.excel_file }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Importar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Exportar Plantilla Objetivos</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Descarga una plantilla de Excel para agregar nuevos objetivos.</p>
+                    <a href="{% url 'export_objetivo_template' %}" class="btn btn-success">Exportar Plantilla</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Importar Objetivos</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Importa un archivo Excel con los objetivos a agregar o actualizar.</p>
+                    <form method="post" action="{% url 'import_objetivo_excel' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.excel_file.label_tag }}
+                            {{ form.excel_file }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Importar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Exportar Plantilla Indicadores</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Descarga una plantilla de Excel para agregar nuevos indicadores.</p>
+                    <a href="{% url 'export_indicador_template' %}" class="btn btn-success">Exportar Plantilla</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Importar Indicadores</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Importa un archivo Excel con los indicadores a agregar o actualizar.</p>
+                    <form method="post" action="{% url 'import_indicador_excel' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.excel_file.label_tag }}
+                            {{ form.excel_file }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Importar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Exportar Plantilla AGCs e Indicadores</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Descarga una plantilla de Excel para agregar nuevos AGCs junto con sus indicadores.</p>
+                    <a href="{% url 'export_agc_indicadores_template' %}" class="btn btn-success">Exportar Plantilla</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Importar AGCs e Indicadores</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Importa un archivo Excel con los AGCs e indicadores a agregar o actualizar.</p>
+                    <form method="post" action="{% url 'import_agc_indicadores_excel' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.excel_file.label_tag }}
+                            {{ form.excel_file }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Importar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
